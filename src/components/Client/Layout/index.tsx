@@ -5,7 +5,7 @@ const ClientLayout = () => {
   return (
     <div>
       <ClientHeader />
-      <main className="pt-20">
+      <main className="pt-20 container mx-auto min-h-screen">
         <Outlet />
       </main>
     </div>

@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 .active {
-  @apply underline;
+  @apply bg-slate-900;
 }

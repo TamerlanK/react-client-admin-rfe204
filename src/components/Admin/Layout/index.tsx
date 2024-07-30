@@ -5,7 +5,9 @@ const AdminLayout = () => {
   return (
     <div>
       <AdminHeader />
-      <Outlet />
+      <main className="pt-20 container mx-auto min-h-screen">
+        <Outlet />
+      </main>
     </div>
   );
 };

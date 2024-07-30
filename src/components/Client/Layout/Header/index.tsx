@@ -10,14 +10,26 @@ const ClientHeader = () => {
           </Link>
           <nav className="flex justify-center items-center gap-x-4 h-full">
             <NavLink
-              to={"/products"}
-              className="text-white text-lg font-semibold"
+              to="/products"
+              className={({ isActive }) =>
+                `text-white text-lg font-semibold px-4 py-2 rounded-md transition-colors ${
+                  isActive
+                    ? "bg-slate-600/50"
+                    : "hover:bg-slate-700/30"
+                }`
+              }
             >
               Products
             </NavLink>
             <NavLink
-              to={"/contact"}
-              className="text-white text-lg font-semibold"
+              to="/contact"
+              className={({ isActive }) =>
+                `text-white text-lg font-semibold px-4 py-2 rounded-md transition-colors ${
+                  isActive
+                    ? "bg-slate-600/50"
+                    : "hover:bg-slate-700/30"
+                }`
+              }
             >
               Contact
             </NavLink>
