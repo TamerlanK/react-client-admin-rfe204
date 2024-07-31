@@ -1,39 +1,33 @@
-import { useEffect, useState } from "react"
-import { Link, useParams } from "react-router-dom"
-import { ProductType } from "../../../types"
-import { fetchSingleProduct } from "../../../api/products"
-import { useFavorites } from "../../../contexts/FavoritesContext"
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { ProductType } from "../../../types";
+import { fetchSingleProduct } from "../../../api/products";
+import { useFavorites } from "../../../contexts/FavoritesContext";
 
-import { IoIosArrowRoundBack } from "react-icons/io"
-import { FaHeart, FaRegHeart } from "react-icons/fa6"
+import { IoIosArrowRoundBack } from "react-icons/io";
+import { FaHeart, FaRegHeart } from "react-icons/fa6";
 
 const ProductDetailsPage = () => {
-  const { id } = useParams()
+  const { id } = useParams();
 
-  if (!id) return
+  const [product, setProduct] = useState<ProductType>();
 
-  const idAsNumber = parseInt(id)
-
-  const [product, setProduct] = useState<ProductType | null>(null)
-
-  const { favorites } = useFavorites()
-
-  const isFavorite = favorites.some((favorite) => favorite.id === idAsNumber)
+  const { favorites, toggleFavorite } = useFavorites();
 
   useEffect(() => {
     const getProduct = async () => {
-      const product = await fetchSingleProduct(parseInt(id))
-      setProduct(product)
-    }
-    getProduct()
-  }, [id])
+      const product = await fetchSingleProduct(Number(id));
+      setProduct(product);
+    };
+    getProduct();
+  }, [id, favorites]);
 
   if (!product) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         Loading...
       </div>
-    )
+    );
   }
 
   return (
@@ -53,8 +47,11 @@ const ProductDetailsPage = () => {
               alt={product.title}
               className="w-full max-h-[400px] object-contain"
             />
-            <div className="p-2 bg-white rounded-full absolute right-3 top-3">
-              {isFavorite ? (
+            <div
+              className="p-2 bg-white rounded-full absolute right-3 top-3 cursor-pointer"
+              onClick={() => toggleFavorite(product)}
+            >
+              {favorites.some((fav) => String(fav.id) === id) ? (
                 <FaHeart className="size-4 text-red-600" />
               ) : (
                 <FaRegHeart className="size-4 text-red-600" />
@@ -82,7 +79,7 @@ const ProductDetailsPage = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ProductDetailsPage
+export default ProductDetailsPage;
