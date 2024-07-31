@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react";
+import { deleteProduct, fetchProducts } from "../../../api/products";
+import TableRow from "../../../components/Admin/TableRow";
 import { ProductType } from "../../../types";
-import { fetchProducts } from "../../../api/products";
-import { FaTrashAlt, FaPen } from "react-icons/fa";
+import Loader from "../../../components/Loader";
+import DeleteModal from "../../../components/Admin/DeleteModal";
 
 const ProductsPageAdmin = () => {
   const [products, setProducts] = useState<ProductType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [productIdToDelete, setProductIdToDelete] = useState<
+    ProductType["id"] | null
+  >(null);
 
   useEffect(() => {
     const getProducts = async () => {
@@ -15,7 +20,6 @@ const ProductsPageAdmin = () => {
         setProducts(data);
       } catch (error: any) {
         console.error("Error while fetching products:", error);
-        setError(error?.message);
       } finally {
         setIsLoading(false);
       }
@@ -23,6 +27,33 @@ const ProductsPageAdmin = () => {
 
     getProducts();
   }, []);
+
+  const handleDeleteClick = (id: ProductType["id"]) => {
+    setIsModalOpen(true);
+    setProductIdToDelete(id);
+  };
+
+  const handleConfirmDelete = () => {
+    if (productIdToDelete) {
+      try {
+        deleteProduct(productIdToDelete);
+        setProducts((prevProduct) =>
+          prevProduct.filter((p) => p.id !== productIdToDelete)
+        );
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsModalOpen(false);
+      }
+    }
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setProductIdToDelete(null);
+  };
+
+  if (isLoading) return <Loader />;
 
   return (
     <div className="min-h-screen pt-20 flex flex-col">
@@ -59,54 +90,21 @@ const ProductsPageAdmin = () => {
             </thead>
             <tbody>
               {products.map((product) => (
-                <tr key={product.id} className="hover:bg-slate-100">
-                  <td className="py-2 px-4 border-b border-gray-200">
-                    {product.id}
-                  </td>
-                  <td className="py-2 px-4 border-b border-gray-200 font-bold">
-                    {product.title}
-                  </td>
-                  <td className="py-2 px-4 border-b border-gray-200 font-semibold">
-                    ${product.price}
-                  </td>
-                  <td className="py-2 px-4 border-b border-gray-200 text-neutral-600">
-                    {product.description}
-                  </td>
-                  <td className="py-2 px-4 border-b border-gray-200">
-                    <span className="p-2 bg-slate-200 rounded-xl whitespace-nowrap text-sm">
-                      {product.category}
-                    </span>
-                  </td>
-                  <td className="py-2 px-4 border-b border-gray-200">
-                    <img
-                      src={product.image}
-                      alt={product.title}
-                      className="w-16 h-16 object-contain mix-blend-multiply"
-                    />
-                  </td>
-                  <td className="py-2 px-4 border-b border-gray-200">
-                    <span className="text-yellow-500 font-semibold">
-                      {product.rating.rate}
-                    </span>
-                    <span className="text-gray-600">
-                      {" "}
-                      ({product.rating.count})
-                    </span>
-                  </td>
-                  <td className="space-x-2 text-center border-gray-200 border-b">
-                    <button className="bg-slate-600 rounded-xl p-2">
-                      <FaPen className="size-4 text-white" />
-                    </button>
-                    <button className="bg-slate-600 rounded-xl p-2">
-                      <FaTrashAlt className="size-4 text-red-500" />
-                    </button>
-                  </td>
-                </tr>
+                <TableRow
+                  key={product.id}
+                  product={product}
+                  handleDelete={handleDeleteClick}
+                />
               ))}
             </tbody>
           </table>
         </div>
       </div>
+      <DeleteModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        onDelete={handleConfirmDelete}
+      />
     </div>
   );
 };

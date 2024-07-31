@@ -62,7 +62,7 @@ const ContactPage = () => {
         <p className="text-gray-600 mt-2">Email: contact@example.com</p>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ContactPage
+export default ContactPage;

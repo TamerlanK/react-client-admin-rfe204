@@ -1,31 +1,48 @@
-import { ProductType } from "../../types"
+import { ProductType } from "../../types";
 
-const BASE_URL = "http://localhost:3000/products"
+const BASE_URL = "http://localhost:3000/products";
 
 export const fetchProducts = async (): Promise<ProductType[]> => {
   try {
-    const response = await fetch(BASE_URL)
+    const response = await fetch(BASE_URL);
     if (!response.ok) {
-      throw new Error("Network response was not ok")
+      throw new Error("Network response was not ok");
     }
-    const data: ProductType[] = await response.json()
-    return data
+    const data: ProductType[] = await response.json();
+    return data;
   } catch (error) {
-    console.error("Error fetching products:", error)
-    throw error
+    console.error("Error fetching products:", error);
+    throw error;
   }
-}
+};
 
-export const fetchSingleProduct = async (id: ProductType["id"]): Promise<ProductType> => {
+export const fetchSingleProduct = async (
+  id: ProductType["id"]
+): Promise<ProductType> => {
   try {
-    const response = await fetch(`${BASE_URL}/${id}`)
+    const response = await fetch(`${BASE_URL}/${id}`);
     if (!response.ok) {
-      throw new Error("Network response was not ok")
+      throw new Error("Network response was not ok");
     }
-    const data: ProductType = await response.json()
-    return data
+    const data: ProductType = await response.json();
+    return data;
   } catch (error) {
-    console.error(`Error fetching the product:`, error)
-    throw error
+    console.error(`Error fetching the product:`, error);
+    throw error;
   }
-}
+};
+
+export const deleteProduct = async (id: ProductType["id"]) => {
+  try {
+    const response = await fetch(`${BASE_URL}/${id}`, {
+      method: "DELETE",
+    });
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+  } catch (error) {
+    console.error(`Error fetching the product:`, error);
+    throw error;
+  }
+};

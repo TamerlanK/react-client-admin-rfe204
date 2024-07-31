@@ -2,7 +2,7 @@ import { Link, NavLink } from "react-router-dom";
 
 const AdminHeader = () => {
   return (
-    <header className="fixed top-0 w-full bg-red-600 h-20">
+    <header className="fixed top-0 w-full bg-red-600 h-20 z-20">
       <div className="container mx-auto h-full">
         <div className="flex justify-between items-center h-full">
           <Link to="/admin" className="text-white text-2xl font-bold">
