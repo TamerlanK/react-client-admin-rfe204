@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { fetchProducts } from "../../../api/products"
-import { ProductType } from "../../../types"
 import ProductCard from "../../../components/Client/ProductCard"
+import { ProductType } from "../../../types"
 
 const ProductsPage = () => {
   const [products, setProducts] = useState<ProductType[]>([])
