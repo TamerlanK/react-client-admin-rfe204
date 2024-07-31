@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import { deleteProduct, fetchProducts } from "../../../api/products";
 import TableRow from "../../../components/Admin/TableRow";
