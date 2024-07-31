@@ -3,9 +3,9 @@ import AdminHeader from "./Header";
 
 const AdminLayout = () => {
   return (
-    <div>
+    <div className="min-h-screen flex flex-col">
       <AdminHeader />
-      <main className="pt-20 container mx-auto min-h-screen">
+      <main className="bg-slate-100 h-full grow">
         <Outlet />
       </main>
     </div>

@@ -1,8 +1,8 @@
-import { Link, NavLink } from "react-router-dom"
+import { Link, NavLink } from "react-router-dom";
 
 const AdminHeader = () => {
   return (
-    <header className="fixed top-0 w-full bg-rose-600 h-20">
+    <header className="fixed top-0 w-full bg-red-600 h-20">
       <div className="container mx-auto h-full">
         <div className="flex justify-between items-center h-full">
           <Link to="/admin" className="text-white text-2xl font-bold">
@@ -11,13 +11,21 @@ const AdminHeader = () => {
           <nav className="flex justify-center items-center gap-x-4 h-full">
             <NavLink
               to={"products"}
-              className="text-white text-lg font-semibold"
+              className={({ isActive }) =>
+                `text-white text-lg font-semibold px-4 py-2 rounded-md transition-colors ${
+                  isActive ? "bg-red-700/90" : "hover:bg-red-700/60"
+                }`
+              }
             >
               Products
             </NavLink>
             <NavLink
               to={"add-product"}
-              className="text-white text-lg font-semibold"
+              className={({ isActive }) =>
+                `text-white text-lg font-semibold px-4 py-2 rounded-md transition-colors ${
+                  isActive ? "bg-red-700/90" : "hover:bg-red-700/60"
+                }`
+              }
             >
               Add product
             </NavLink>
@@ -29,7 +37,7 @@ const AdminHeader = () => {
         </div>
       </div>
     </header>
-  )
-}
+  );
+};
 
-export default AdminHeader
+export default AdminHeader;

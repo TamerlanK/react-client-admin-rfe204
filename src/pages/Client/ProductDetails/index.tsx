@@ -32,14 +32,14 @@ const ProductDetailsPage = () => {
 
   return (
     <div className="min-h-screen pt-20 px-4 sm:px-6 lg:px-8 bg-gray-100 flex flex-col justify-center items-center">
-      <Link
-        to={"/products"}
-        className="mb-6 self-start flex items-center gap-x-1 text-neutral-600 hover:underline"
-      >
-        <IoIosArrowRoundBack className="size-6" />
-        Back to all products
-      </Link>
       <div className="max-w-7xl mx-auto bg-white p-6 rounded-lg shadow-lg">
+        <Link
+          to={"/products"}
+          className="mb-10 self-start flex items-center gap-x-1 text-neutral-600 hover:underline"
+        >
+          <IoIosArrowRoundBack className="size-6" />
+          Back to all products
+        </Link>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           <div className="flex justify-center items-center col-span-2 relative">
             <img

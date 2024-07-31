@@ -8,6 +8,3 @@ body,
   min-height: 100%;
 }
 
-.active {
-  @apply bg-slate-900;
-}

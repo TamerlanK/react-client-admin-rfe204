@@ -16,7 +16,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
     <div className="relative max-w-sm mx-auto rounded overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
       <Link to={`/products/${product.id}`}>
         <img
-          className="w-full h-48 object-contain mix-blend-multiply p-6 hover:scale-110 transition-transform duration-300"
+          className="w-full h-48 object-contain mix-blend-multiply p-6 hover:scale-110 transition-transform duration-300 select-none"
           src={product.image}
           alt={product.title}
         />

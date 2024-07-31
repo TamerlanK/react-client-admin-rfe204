@@ -1,30 +1,31 @@
-import { useEffect, useState } from "react"
-import { fetchProducts } from "../../../api/products"
-import ProductCard from "../../../components/Client/ProductCard"
-import { ProductType } from "../../../types"
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect, useState } from "react";
+import { fetchProducts } from "../../../api/products";
+import ProductCard from "../../../components/Client/ProductCard";
+import { ProductType } from "../../../types";
 
 const ProductsPage = () => {
-  const [products, setProducts] = useState<ProductType[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
+  const [products, setProducts] = useState<ProductType[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const loadProducts = async () => {
       try {
-        const fetchedProducts = await fetchProducts()
-        setProducts(fetchedProducts)
+        const fetchedProducts = await fetchProducts();
+        setProducts(fetchedProducts);
       } catch (error: any) {
-        setError(error.message)
+        setError(error?.message);
       } finally {
-        setLoading(false)
+        setIsLoading(false);
       }
-    }
+    };
 
-    loadProducts()
-  }, [])
+    loadProducts();
+  }, []);
 
-  if (loading) return <div>Loading...</div>
-  if (error) return <div>Error!</div>
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error!</div>;
 
   return (
     <div className="min-h-screen pt-20">
@@ -35,7 +36,7 @@ const ProductsPage = () => {
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ProductsPage
+export default ProductsPage;
