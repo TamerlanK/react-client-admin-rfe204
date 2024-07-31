@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom"
 
 const AdminHeader = () => {
   return (
@@ -21,11 +21,15 @@ const AdminHeader = () => {
             >
               Add product
             </NavLink>
+            {/* WILL BE DELETED LATER */}
+            <Link to={"/"} className="text-white">
+              switch to client
+            </Link>
           </nav>
         </div>
       </div>
     </header>
-  );
-};
+  )
+}
 
-export default AdminHeader;
+export default AdminHeader

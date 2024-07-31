@@ -1,15 +1,15 @@
-import { Outlet } from "react-router-dom";
-import ClientHeader from "./Header";
+import { Outlet } from "react-router-dom"
+import ClientHeader from "./Header"
 
 const ClientLayout = () => {
   return (
-    <div>
+    <div className="min-h-screen flex flex-col">
       <ClientHeader />
-      <main className="pt-20 container mx-auto min-h-screen">
+      <main className="bg-slate-100 h-full grow">
         <Outlet />
       </main>
     </div>
-  );
-};
+  )
+}
 
-export default ClientLayout;
+export default ClientLayout
