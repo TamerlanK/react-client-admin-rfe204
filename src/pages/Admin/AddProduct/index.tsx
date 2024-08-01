@@ -1,17 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { zodResolver } from "@hookform/resolvers/zod";
-import { SubmitHandler, useForm } from "react-hook-form";
 import { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { addProduct, BASE_URL } from "../../../api/products";
+import Alert from "../../../components/Alert";
 import Loader from "../../../components/Loader";
 import useFetchCategories from "../../../hooks/useFetchCategories";
 import { capitalizeWords } from "../../../utils";
 import {
   AddProductFormSchema,
   AddProductFormSchemaType,
-  DEFAULT_ADD_PRODUCT_FORM_VALUES,
 } from "../../../validation";
-import Alert from "../../../components/Alert";
 
 const AddProductPage = () => {
   const {
@@ -27,7 +26,6 @@ const AddProductPage = () => {
     formState: { errors, isSubmitting },
   } = useForm<AddProductFormSchemaType>({
     resolver: zodResolver(AddProductFormSchema),
-    defaultValues: DEFAULT_ADD_PRODUCT_FORM_VALUES,
   });
 
   const onSubmit: SubmitHandler<AddProductFormSchemaType> = async (data) => {

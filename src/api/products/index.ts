@@ -18,7 +18,7 @@ export const fetchProducts = async (): Promise<ProductType[]> => {
 };
 
 export const fetchSingleProduct = async (
-  id: number | string
+  id: ProductType["id"]
 ): Promise<ProductType> => {
   try {
     const response = await fetch(`${BASE_URL}/${id}`);

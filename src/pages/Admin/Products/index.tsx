@@ -46,14 +46,15 @@ const ProductsPageAdmin = () => {
         console.error(error);
       } finally {
         setIsModalOpen(false);
+        document.body.classList.remove("overflow-hidden");
       }
     }
   };
 
   const handleCloseModal = () => {
+    document.body.classList.remove("overflow-hidden");
     setIsModalOpen(false);
     setProductIdToDelete(null);
-    document.body.classList.remove("overflow-hidden");
   };
 
   if (isLoading) return <Loader />;

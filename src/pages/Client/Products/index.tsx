@@ -29,11 +29,16 @@ const ProductsPage = () => {
 
   return (
     <div className="min-h-screen pt-20">
-      <h1 className="text-center text-4xl mt-12 font-semibold">All Products</h1>
-      <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 py-12 px-6 md:px-0">
-        {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
+      <div className="container mx-auto px-6">
+        <h1 className="text-center text-4xl mt-12 font-semibold">
+          All Products
+        </h1>
+        <div>Filter Search</div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 py-12">
+          {products.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
       </div>
     </div>
   );

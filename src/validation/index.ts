@@ -14,11 +14,3 @@ export const AddProductFormSchema = z.object({
 });
 
 export type AddProductFormSchemaType = z.infer<typeof AddProductFormSchema>;
-
-export const DEFAULT_ADD_PRODUCT_FORM_VALUES: AddProductFormSchemaType = {
-  title: "",
-  description: "",
-  category: "",
-  price: 0,
-  image: "",
-};
