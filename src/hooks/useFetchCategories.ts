@@ -17,7 +17,7 @@ const useFetchCategories = (url: string): CategoryFetchResult => {
       try {
         const response = await fetch(url);
         if (!response.ok) {
-          throw new Error(`Error: ${response.statusText}`);
+          throw new Error(`Failed to fetch categories`);
         }
         const products = await response.json();
         const allCategories = Array.from(
@@ -27,7 +27,7 @@ const useFetchCategories = (url: string): CategoryFetchResult => {
         ) as string[];
         setCategories(allCategories);
       } catch (err) {
-        setError((err as Error).message);
+        setError("Failed to fetch categories. Please, try again later");
       } finally {
         setIsLoading(false);
       }

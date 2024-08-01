@@ -24,7 +24,7 @@ const AddProductPage = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<AddProductFormSchemaType>({
     resolver: zodResolver(AddProductFormSchema),
     defaultValues: DEFAULT_ADD_PRODUCT_FORM_VALUES,
@@ -40,6 +40,8 @@ const AddProductPage = () => {
     }
   };
 
+  const isDisabled = !!fetchCategoriesError || isSubmitting;
+
   if (isLoading) return <Loader />;
 
   return (
@@ -50,11 +52,9 @@ const AddProductPage = () => {
             Add Product
           </h1>
           {fetchCategoriesError && (
-            <Alert message={fetchCategoriesError || "Something went wrong!"} />
+            <Alert type="error" message={fetchCategoriesError} />
           )}
-          {submitError && (
-            <Alert message={submitError || "Something went wrong!"} />
-          )}
+          {submitError && <Alert type="error" message={submitError} />}
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div>
               <label
@@ -67,8 +67,11 @@ const AddProductPage = () => {
                 id="title"
                 type="text"
                 {...register("title")}
-                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm p-1.5"
+                className={`mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm p-1.5 ${
+                  isDisabled ? "bg-gray-100 cursor-not-allowed" : ""
+                }`}
                 placeholder="Enter product title"
+                disabled={isDisabled}
               />
               {errors.title && (
                 <p className="text-red-600 text-sm mt-1 px-2 py-1 bg-red-200 rounded-lg">
@@ -87,8 +90,11 @@ const AddProductPage = () => {
                 id="price"
                 type="text"
                 {...register("price")}
-                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm p-1.5"
+                className={`mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm p-1.5 ${
+                  isDisabled ? "bg-gray-100 cursor-not-allowed" : ""
+                }`}
                 placeholder="Enter product price"
+                disabled={isDisabled}
               />
               {errors.price && (
                 <p className="text-red-600 text-sm mt-1 px-2 py-1 bg-red-200 rounded-lg">
@@ -107,8 +113,11 @@ const AddProductPage = () => {
                 id="description"
                 type="text"
                 {...register("description")}
-                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm p-1.5"
+                className={`mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm p-1.5 ${
+                  isDisabled ? "bg-gray-100 cursor-not-allowed" : ""
+                }`}
                 placeholder="Enter product description"
+                disabled={isDisabled}
               />
               {errors.description && (
                 <p className="text-red-600 text-sm mt-1 px-2 py-1 bg-red-200 rounded-lg">
@@ -125,8 +134,11 @@ const AddProductPage = () => {
               </label>
               <select
                 id="category"
-                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-slate-500 focus:border-slate-500 sm:text-sm p-1.5"
+                className={`mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-slate-500 focus:border-slate-500 sm:text-sm p-1.5 ${
+                  isDisabled ? "bg-gray-100 cursor-not-allowed" : ""
+                }`}
                 {...register("category")}
+                disabled={isDisabled}
               >
                 <option value="" defaultChecked>
                   Select a category
@@ -154,8 +166,11 @@ const AddProductPage = () => {
                 id="image"
                 type="url"
                 {...register("image")}
-                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm p-1.5"
+                className={`mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm p-1.5 ${
+                  isDisabled ? "bg-gray-100 cursor-not-allowed" : ""
+                }`}
                 placeholder="Enter product image URL"
+                disabled={isDisabled}
               />
               {errors.image && (
                 <p className="text-red-600 text-sm mt-1 px-2 py-1 bg-red-200 rounded-lg">
@@ -165,7 +180,10 @@ const AddProductPage = () => {
             </div>
             <button
               type="submit"
-              className="w-full bg-slate-800 text-white py-2 rounded-md font-semibold hover:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-800 focus:ring-offset-2"
+              className={`w-full bg-slate-800 text-white py-2 rounded-md font-semibold hover:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-800 focus:ring-offset-2 ${
+                isDisabled ? "opacity-50 cursor-not-allowed" : ""
+              }`}
+              disabled={isDisabled}
             >
               Add Product
             </button>
