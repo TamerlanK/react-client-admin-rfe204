@@ -32,6 +32,7 @@ const ProductsPageAdmin = () => {
   const handleDeleteClick = (id: ProductType["id"]) => {
     setIsModalOpen(true);
     setProductIdToDelete(id);
+    document.body.classList.add("overflow-hidden");
   };
 
   const handleConfirmDelete = () => {
@@ -52,55 +53,55 @@ const ProductsPageAdmin = () => {
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setProductIdToDelete(null);
+    document.body.classList.remove("overflow-hidden");
   };
 
   if (isLoading) return <Loader />;
 
   return (
     <div className="min-h-screen pt-20 flex flex-col">
-      <div className="grow py-12">
-        <div className="container mx-auto overflow-x-auto">
-          <table className="min-w-full bg-white rounded-xl">
-            <thead>
-              <tr>
-                <th className="py-2 px-4 border-b border-gray-200 text-left">
-                  ID
-                </th>
-                <th className="py-2 px-4 border-b border-gray-200 text-left">
-                  Title
-                </th>
-                <th className="py-2 px-4 border-b border-gray-200 text-left">
-                  Price
-                </th>
-                <th className="py-2 px-4 border-b border-gray-200 text-left">
-                  Description
-                </th>
-                <th className="py-2 px-4 border-b border-gray-200 text-left">
-                  Category
-                </th>
-                <th className="py-2 px-4 border-b border-gray-200 text-left">
-                  Image
-                </th>
-                <th className="py-2 px-4 border-b border-gray-200 text-left">
-                  Rating
-                </th>
-                <th className="py-2 px-4 border-b border-gray-200 text-left">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {products.map((product) => (
-                <TableRow
-                  key={product.id}
-                  product={product}
-                  handleDelete={handleDeleteClick}
-                />
-              ))}
-            </tbody>
-          </table>
-        </div>
+      <div className="container mx-auto overflow-x-auto my-6">
+        <table className="min-w-full bg-white rounded-xl">
+          <thead>
+            <tr>
+              <th className="py-2 px-4 border-b border-gray-200 text-left">
+                ID
+              </th>
+              <th className="py-2 px-4 border-b border-gray-200 text-left">
+                Title
+              </th>
+              <th className="py-2 px-4 border-b border-gray-200 text-left">
+                Price
+              </th>
+              <th className="py-2 px-4 border-b border-gray-200 text-left">
+                Description
+              </th>
+              <th className="py-2 px-4 border-b border-gray-200 text-left">
+                Category
+              </th>
+              <th className="py-2 px-4 border-b border-gray-200 text-left">
+                Image
+              </th>
+              <th className="py-2 px-4 border-b border-gray-200 text-left">
+                Rating
+              </th>
+              <th className="py-2 px-4 border-b border-gray-200 text-left">
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {products.map((product) => (
+              <TableRow
+                key={product.id}
+                product={product}
+                handleDelete={handleDeleteClick}
+              />
+            ))}
+          </tbody>
+        </table>
       </div>
+
       <DeleteModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}

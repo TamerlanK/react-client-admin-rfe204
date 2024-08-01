@@ -33,9 +33,9 @@ const TableRow = ({ product, handleDelete }: TableRowProps) => {
       </td>
       <td className="py-2 px-4 border-b border-gray-200 text-center">
         <span className="text-yellow-500 font-extrabold text-lg">
-          {product.rating.rate}
+          {product?.rating?.rate || 0}
         </span>
-        <span className="text-gray-600"> ({product.rating.count})</span>
+        <span className="text-gray-600"> ({product?.rating?.count || 0})</span>
       </td>
       <td className="space-x-2 text-center border-gray-200 border-b">
         <button className="bg-slate-600 rounded-xl p-2">

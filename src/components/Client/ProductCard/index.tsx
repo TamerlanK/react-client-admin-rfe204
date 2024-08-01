@@ -1,19 +1,19 @@
-import { FaHeart, FaRegHeart, FaStar } from "react-icons/fa6"
-import { Link } from "react-router-dom"
-import { useFavorites } from "../../../contexts/FavoritesContext"
-import { ProductType } from "../../../types"
+import { FaHeart, FaRegHeart, FaStar } from "react-icons/fa6";
+import { Link } from "react-router-dom";
+import { useFavorites } from "../../../contexts/FavoritesContext";
+import { ProductType } from "../../../types";
 
 interface ProductCardProps {
-  product: ProductType
+  product: ProductType;
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {
-  const { favorites, toggleFavorite } = useFavorites()
+  const { favorites, toggleFavorite } = useFavorites();
 
-  const isFavorite = favorites.some((favorite) => favorite.id === product.id)
+  const isFavorite = favorites.some((favorite) => favorite.id === product.id);
 
   return (
-    <div className="relative max-w-sm mx-auto rounded overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+    <div className="relative mx-auto rounded overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 w-full">
       <Link to={`/products/${product.id}`}>
         <img
           className="w-full h-48 object-contain mix-blend-multiply p-6 hover:scale-110 transition-transform duration-300 select-none"
@@ -36,7 +36,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           <div className="flex items-center">
             <FaStar className="text-yellow-500 size-5" />
             <span className="ml-2 text-gray-700">
-              {product.rating.rate} ({product.rating.count})
+              {product?.rating?.rate ?? 0} ({product?.rating?.count ?? 0})
             </span>
           </div>
         </div>
@@ -57,7 +57,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ProductCard
+export default ProductCard;

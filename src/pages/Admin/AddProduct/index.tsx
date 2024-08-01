@@ -1,22 +1,46 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useState } from "react";
+import { addProduct, BASE_URL } from "../../../api/products";
+import Loader from "../../../components/Loader";
+import useFetchCategories from "../../../hooks/useFetchCategories";
+import { capitalizeWords } from "../../../utils";
 import {
   AddProductFormSchema,
   AddProductFormSchemaType,
+  DEFAULT_ADD_PRODUCT_FORM_VALUES,
 } from "../../../validation";
+import Alert from "../../../components/Alert";
 
 const AddProductPage = () => {
+  const {
+    categories,
+    isLoading,
+    error: fetchCategoriesError,
+  } = useFetchCategories(BASE_URL);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<AddProductFormSchemaType>({
     resolver: zodResolver(AddProductFormSchema),
+    defaultValues: DEFAULT_ADD_PRODUCT_FORM_VALUES,
   });
 
-  const onSubmit: SubmitHandler<AddProductFormSchemaType> = (data) => {
-    console.log("Form data:", data);
+  const onSubmit: SubmitHandler<AddProductFormSchemaType> = async (data) => {
+    try {
+      await addProduct(data);
+      console.log(data);
+      setSubmitError(null);
+    } catch (error: any) {
+      setSubmitError(error.message);
+    }
   };
+
+  if (isLoading) return <Loader />;
 
   return (
     <div className="min-h-screen pt-20 flex flex-col bg-gray-100">
@@ -25,6 +49,12 @@ const AddProductPage = () => {
           <h1 className="text-2xl font-bold text-center text-gray-800">
             Add Product
           </h1>
+          {fetchCategoriesError && (
+            <Alert message={fetchCategoriesError || "Something went wrong!"} />
+          )}
+          {submitError && (
+            <Alert message={submitError || "Something went wrong!"} />
+          )}
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div>
               <label
@@ -38,6 +68,7 @@ const AddProductPage = () => {
                 type="text"
                 {...register("title")}
                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm p-1.5"
+                placeholder="Enter product title"
               />
               {errors.title && (
                 <p className="text-red-600 text-sm mt-1 px-2 py-1 bg-red-200 rounded-lg">
@@ -57,6 +88,7 @@ const AddProductPage = () => {
                 type="text"
                 {...register("price")}
                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm p-1.5"
+                placeholder="Enter product price"
               />
               {errors.price && (
                 <p className="text-red-600 text-sm mt-1 px-2 py-1 bg-red-200 rounded-lg">
@@ -76,6 +108,7 @@ const AddProductPage = () => {
                 type="text"
                 {...register("description")}
                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm p-1.5"
+                placeholder="Enter product description"
               />
               {errors.description && (
                 <p className="text-red-600 text-sm mt-1 px-2 py-1 bg-red-200 rounded-lg">
@@ -90,12 +123,20 @@ const AddProductPage = () => {
               >
                 Category
               </label>
-              <input
+              <select
                 id="category"
-                type="text"
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-slate-500 focus:border-slate-500 sm:text-sm p-1.5"
                 {...register("category")}
-                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm p-1.5"
-              />
+              >
+                <option value="" defaultChecked>
+                  Select a category
+                </option>
+                {categories.map((category) => (
+                  <option key={category} value={category.toLowerCase()}>
+                    {capitalizeWords(category)}
+                  </option>
+                ))}
+              </select>
               {errors.category && (
                 <p className="text-red-600 text-sm mt-1 px-2 py-1 bg-red-200 rounded-lg">
                   {errors.category.message}
@@ -111,9 +152,10 @@ const AddProductPage = () => {
               </label>
               <input
                 id="image"
-                type="text"
+                type="url"
                 {...register("image")}
                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm p-1.5"
+                placeholder="Enter product image URL"
               />
               {errors.image && (
                 <p className="text-red-600 text-sm mt-1 px-2 py-1 bg-red-200 rounded-lg">

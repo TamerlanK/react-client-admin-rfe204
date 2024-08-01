@@ -16,7 +16,7 @@ const ProductDetailsPage = () => {
 
   useEffect(() => {
     const getProduct = async () => {
-      const product = await fetchSingleProduct(Number(id));
+      const product = await fetchSingleProduct(id!);
       setProduct(product);
     };
     getProduct();
@@ -67,10 +67,10 @@ const ProductDetailsPage = () => {
               <p className="text-gray-700 mb-4">{product.description}</p>
               <div className="flex items-center mb-4">
                 <span className="text-yellow-500 font-semibold mr-2">
-                  {product.rating.rate}
+                  {product?.rating?.rate ?? 0}
                 </span>
                 <span className="text-gray-600">
-                  ({product.rating.count} reviews)
+                  ({product?.rating?.count ?? 0} reviews)
                 </span>
               </div>
               <p className="text-gray-500">{product.category}</p>

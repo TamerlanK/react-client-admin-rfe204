@@ -8,7 +8,7 @@ const DeleteModal = ({ isOpen, onClose, onDelete }: DeleteModalProps) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
+    <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center backdrop-blur-sm">
       <div className="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full">
         <div className="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
           <h3 className="text-lg leading-6 font-medium text-gray-900">
